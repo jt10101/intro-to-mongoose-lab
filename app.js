@@ -4,19 +4,9 @@ const mongoose = require("mongoose");
 const Customer = require("./models/customer");
 
 const connect = async () => {
-  // Connect to MongoDB using the MONGODB_URI specified in our .env file.
   await mongoose.connect(process.env.MONGODB_URI);
-  //   console.log("Connected to MongoDB");
-
-  // Call the runQueries function, which will eventually hold functions to work
-  // with data in our db.
   await runQueries();
-
-  // Disconnect our app from MongoDB after our queries run.
   await mongoose.disconnect();
-  //   console.log("Disconnected from MongoDB");
-
-  // Close our app, bringing us back to the command line.
   process.exit();
 };
 
@@ -26,12 +16,18 @@ const runQueries = async () => {
   mongoose.set("debug", true);
 
   while (isActive) {
-    // Prompt
     const prompt = require("prompt-sync")();
     console.log(
       "\nWhat would you like to do?\n\n1. Create a customer \n2. View all customers \n3. Update a customer \n4. Delete a customer\n5. Exit\n\nNumber of action to run:"
     );
-    const userSelection = prompt();
+    let userSelection = prompt();
+
+    // Validation
+    if (isNaN(userSelection) || userSelection > 5 || userSelection <= 0) {
+      console.log("*******************************");
+      console.log("Invalid input, please try again");
+      console.log("*******************************");
+    }
 
     switch (userSelection) {
       case "1":
