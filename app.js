@@ -18,9 +18,15 @@ const runQueries = async () => {
   while (isActive) {
     const prompt = require("prompt-sync")();
     console.log(
-      "\nWhat would you like to do?\n\n1. Create a customer \n2. View all customers \n3. Update a customer \n4. Delete a customer\n5. Exit\n\nNumber of action to run:"
+      "\nWhat would you like to do?\n" +
+        "\n" +
+        "1. Add New Customer\n" +
+        "2. View All Customers\n" +
+        "3. Update Customer\n" +
+        "4. Delete Customer\n" +
+        "5. Exit\n"
     );
-    let userSelection = prompt();
+    let userSelection = prompt("Enter your selection: ");
 
     // Validation
     if (isNaN(userSelection) || userSelection > 5 || userSelection <= 0) {
