@@ -13,7 +13,7 @@ const connect = async () => {
 const runQueries = async () => {
   let isActive = true;
   console.log("Queries running.");
-  mongoose.set("debug", true);
+  //   mongoose.set("debug", true);
 
   while (isActive) {
     const prompt = require("prompt-sync")();
@@ -31,13 +31,9 @@ const runQueries = async () => {
 
     switch (userSelection) {
       case "1":
-        // User selects 1 to create a new customer
-        console.log(
-          "\nAdding a new customer\n\nWhat is the customer's new name?"
-        );
-        const newCustName = prompt();
-        console.log("What is the customer's age?");
-        const newCustAge = prompt();
+        console.log("\nAdding a new customer\n");
+        const newCustName = prompt("What is the customer's new name? ");
+        const newCustAge = prompt("What is the customer's age? ");
         const newCustDetails = {
           name: newCustName,
           age: Number(newCustAge),
@@ -46,7 +42,6 @@ const runQueries = async () => {
         break;
 
       case "2":
-        // User selects 2 to view all customers
         const viewAll = await Customer.find({});
         console.log(
           viewAll.map((cust) =>
@@ -62,14 +57,12 @@ const runQueries = async () => {
             console.log(`id: ${cust._id}, name: ${cust.name}, age: ${cust.age}`)
           )
         );
-        console.log(
-          "Copy and paste the id of the customer you would like to update here: "
+
+        const updatingID = prompt(
+          "Copy and paste the id of the customer you would like to update: "
         );
-        const updatingID = prompt();
-        console.log("What is the customer's new name?");
-        const updateCustName = prompt();
-        console.log("What is the customer's new age?");
-        const updateCustAge = prompt();
+        const updateCustName = prompt("What is the customer's new name? ");
+        const updateCustAge = prompt("What is the customer's new age? ");
 
         await Customer.findByIdAndUpdate(
           updatingID,
@@ -79,13 +72,16 @@ const runQueries = async () => {
         break;
 
       case "4":
-        console.log(await Customer.find({}));
+        const viewAllDelete = await Customer.find({});
         console.log(
-          "Copy and paste the id of the customer you would like to delete here: "
+          viewAllDelete.map((cust) =>
+            console.log(`id: ${cust._id}, name: ${cust.name}, age: ${cust.age}`)
+          )
         );
-        const deletingID = prompt();
-        console.log("Confirm? [Y/N]");
-        const confirmation = prompt();
+        const deletingID = prompt(
+          "Copy and paste the id of the customer you would like to delete: "
+        );
+        const confirmation = prompt("Confirm? [Y/N]: ");
         if (confirmation === "Y") {
           await Customer.findByIdAndDelete(deletingID);
         }
