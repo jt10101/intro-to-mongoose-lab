@@ -52,11 +52,20 @@ const runQueries = async () => {
       case "2":
         // User selects 2 to view all customers
         const viewAll = await Customer.find({});
-        console.log(viewAll);
+        console.log(
+          viewAll.map((cust) =>
+            console.log(`id: ${cust._id}, name: ${cust.name}, age: ${cust.age}`)
+          )
+        );
         break;
 
       case "3":
-        console.log(await Customer.find({}));
+        const viewAllUpdate = await Customer.find({});
+        console.log(
+          viewAllUpdate.map((cust) =>
+            console.log(`id: ${cust._id}, name: ${cust.name}, age: ${cust.age}`)
+          )
+        );
         console.log(
           "Copy and paste the id of the customer you would like to update here: "
         );
